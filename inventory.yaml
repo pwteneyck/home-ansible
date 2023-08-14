@@ -1,0 +1,10 @@
+home:
+  vars:
+    ansible_user: pwt
+  hosts:
+    plex:
+      ansible_host: 192.168.4.207
+    dns:
+      ansible_host: 192.168.6.81
+    homeassistant:
+      ansible_host: 192.168.6.96
