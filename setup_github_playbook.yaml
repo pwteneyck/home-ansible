@@ -1,0 +1,27 @@
+- name: Set up github SSH access
+  hosts: localhost
+  vars_prompt:
+    - name: github_rsa_path
+      prompt: Enter path to SSH private key for github.com
+      private: false
+  tasks:
+    - name: Check if private key file exists
+      stat:
+        path: "{{ github_rsa_path }}"
+      register: result
+      failed_when: not result.stat.exists
+    - name: Ensure proper r/w permissions
+      raw: "chmod 600 {{ github_rsa_path }}"
+    - name: Ensure ssh-agent
+      shell: eval `ssh-agent -s`
+    - name: Add SSH identity
+      shell: "ssh-add {{ github_rsa_path }}"
+    - name: Verify SSH access to github.com
+      raw: ssh -T git@github.com
+      register: github_ssh_result
+      failed_when: not github_ssh_result.rc == 1
+    - name: Finish
+      debug: 
+        msg:
+          - "Make sure to use SSH URLs for github projects. From the local repository, run:"
+          - "git remote set-url origin git@github.com:<USERNAME>/<REPO>.git"

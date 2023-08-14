@@ -1,5 +1,5 @@
 - name: Update and upgrade apt packages
-  hosts: home 
+  hosts: homecloud 
   become: true # run with '-K' to prompt for sudo password
   tasks:
     - name: something

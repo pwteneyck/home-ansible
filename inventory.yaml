@@ -1,4 +1,4 @@
-home:
+homecloud:
   vars:
     ansible_user: pwt
   hosts:
