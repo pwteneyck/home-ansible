@@ -2,9 +2,9 @@
   hosts: homecloud 
   become: true # run with '-K' to prompt for sudo password
   tasks:
-    - name: something
+    - name: Update and upgrade apt packages 
       apt:
         upgrade: yes
         update_cache: yes
-     #  register: aptout
-    # - debug: msg="{{ aptout.stdout.split('\n')[:-1] }}"
+      register: aptout
+    - debug: msg="{{ aptout.stdout.split('\n')[:-1] }}"
